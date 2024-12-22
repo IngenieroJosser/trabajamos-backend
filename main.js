@@ -1,11 +1,23 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const cors = require('cors');  // Importar cors
+const userRoutes = require('./routes/userRoutes');
+
+dotenv.config(); // Cargar variables de entorno
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Inicio de backend de |Trabajamos - CO-Working|');
-});
+app.use(cors());
 
+app.use(bodyParser.json());
+
+// Usar las rutas de usuarios
+app.use('/api', userRoutes);
+
+// Iniciar el servidor
 app.listen(PORT, () => {
-    console.log(`Servidor de trabajamos en http://localhost:${PORT}`);
-})
+  console.log(`Servidor de Trabajamos en http://localhost:${PORT}`);
+  
+});
